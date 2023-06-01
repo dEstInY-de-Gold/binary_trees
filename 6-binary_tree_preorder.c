@@ -10,10 +10,10 @@ void traverse(binary_tree_t *node);
 void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int))
 {
 	if ((!(tree)) || (!(func)))
-		EXIT_SUCCESS;
+		return; /* EXIT_SUCCESS; */
 	func(tree->n);
-	binary_tree_preorder(tree->left, func(tree->left->n));
-	binary_tree_preorder(tree->right, func(tree->right->n));
+	binary_tree_preorder(tree->left, func);
+	binary_tree_preorder(tree->right, func);
 }
 
 /**
