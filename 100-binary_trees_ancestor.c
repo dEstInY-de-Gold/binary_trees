@@ -45,6 +45,18 @@ binary_tree_t *binary_tree_uncle(binary_tree_t *node)
  */
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tree_t *second)
 {
+	binary_tree_t *left_ancestor, *right_ancestor;
+
 	if (!(first) || !(second))
+		return (NULL);
+	left_ancestor = binary_tree_uncle(first->parent);
+	if (!(left_ancestor))
+		return (NULL);
+	right_ancestor = binary_tree_uncle(second->parent);
+	if (!(right_ancestor))
+		return (NULL);
+	if (left_ancestor == right_ancestor)
+		return (left_ancestor);
+	else
 		return (NULL);
 }
