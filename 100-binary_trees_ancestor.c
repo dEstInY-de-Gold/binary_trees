@@ -1,42 +1,6 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_sibling - Finds the siblings to a tree.
- * @node: pointer to given node.
- *
- * Return: A pointer to the found sibling.
- */
-
-binary_tree_t *binary_tree_sibling(binary_tree_t *node)
-{
-	if ((!(node)) || (!(node->parent)))
-		return (NULL);
-	if (node->parent->left && node->parent->left != node)
-		return (node->parent->left);
-	if (node->parent->right && node->parent->right != node)
-		return (node->parent->right);
-
-	return (NULL);
-}
-
-/**
- * binary_tree_uncle - finds uncle to a node.
- * @node: given node.
- *
- * Return: A pointer to the found uncle of node.
- */
-
-binary_tree_t *binary_tree_uncle(binary_tree_t *node)
-{
-	binary_tree_t *uncle;
-
-	if ((!(node)) || (!(node->parent)))
-		return (NULL);
-	uncle = binary_tree_sibling(node->parent);
-	return (uncle);
-}
-
-/**
  * binary_trees_ancestor - Find the lowest common ancestor of two nodes.
  * @first: A pointer to first node.
  * @second: A pointer to second node.
@@ -45,18 +9,15 @@ binary_tree_t *binary_tree_uncle(binary_tree_t *node)
  */
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tree_t *second)
 {
-	binary_tree_t *left_ancestor, *right_ancestor;
+	const binary_tree_t *left_ancestor, *right_ancestor;
 
-	if (!(first) || !(second))
-		return (NULL);
-	left_ancestor = binary_tree_uncle(first->parent);
-	if (!(left_ancestor))
-		return (NULL);
-	right_ancestor = binary_tree_uncle(second->parent);
-	if (!(right_ancestor))
-		return (NULL);
-	if (left_ancestor == right_ancestor)
-		return (left_ancestor);
-	else
-		return (NULL);
+	for (left_ancestor = first; left_ancestor; left_ancestor = left_ancestor->parent)
+	{
+		for (right_ancestor = second; right_ancestor; right_ancestor = right_ancestor->parent)
+		{
+			if (right_ancestor == left_ancestor)
+				return ((binary_tree_t *) right_ancestor);
+		}
+	}
+	return (NULL);
 }
