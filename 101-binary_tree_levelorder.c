@@ -28,6 +28,8 @@ void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int))
 		{
 			queue = (const binary_tree_t **)realloc(queue,
 					(rear + 1) * sizeof(binary_tree_t *));
+			if (!(queue))
+				return;
 			queue[rear] = crnt->left;
 			rear++;
 		}
@@ -35,6 +37,8 @@ void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int))
 		{
 			queue = (const binary_tree_t **)realloc(queue,
 					(rear + 1) * sizeof(binary_tree_t *));
+			if (!(queue))
+				return;
 			queue[rear] = crnt->right;
 			rear++;
 		}
